@@ -18,11 +18,11 @@ const Column = ({
 	 * When clicking on an username in the table -> redirect to the username profile
 	 * When clicking on a website link in the table -> open a new tab to the user's website
 	 */
-	const handleNav = (link: string | number) => {
+	const handleNav = (user: UserFinal) => {
 		if (title === "username") {
-			navigate("/profile");
+			navigate(`/profile/${user.id}`);
 		} else if (title === "website") {
-			window.open(`https://${link}`, "_blank", "noopener,noreferrer");
+			window.open(`https://${user.website}`, "_blank", "noopener,noreferrer");
 		}
 	};
 
@@ -35,7 +35,7 @@ const Column = ({
 						<div className="border-b-2">
 							{title === "username" || title === "website" ? (
 								<p
-									onClick={() => handleNav(user[title])}
+									onClick={() => handleNav(user)}
 									className="mx-2 text-blue-700 underline hover:cursor-pointer">
 									{user[title]}
 								</p>

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 import type { Album, Todo, User, UserFinal } from "../lib/type";
 
+// COMPONENTS
 import Loading from "../components/Loading";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -17,7 +18,7 @@ const Home = () => {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const resUser = await axios.get<User[]>(
+				const resUsers = await axios.get<User[]>(
 					`${import.meta.env.VITE_API}/users`
 				);
 
@@ -31,7 +32,7 @@ const Home = () => {
 				let albumsCount: number = 0;
 				const userFinalTemp: UserFinal[] = [];
 
-				for (let user of resUser.data) {
+				for (let user of resUsers.data) {
 					for (let todo of resTodos.data) {
 						user.id === todo.userId && todosCount++;
 					}
@@ -61,22 +62,24 @@ const Home = () => {
 		fetchData();
 	}, []);
 
-	return isLoading ? (
-		<main>
-			<Loading />
-		</main>
-	) : (
+	return (
 		<>
 			<Header />
-			<main>
-				<div className="flex">
-					<Column title="username" data={usersList} />
-					<Column title="email" data={usersList} />
-					<Column title="website" data={usersList} />
-					<Column title="nbtodos" data={usersList} />
-					<Column title="nbalbums" data={usersList} />
-				</div>
-			</main>
+			{isLoading ? (
+				<main>
+					<Loading />
+				</main>
+			) : (
+				<main>
+					<div className="flex">
+						<Column title="username" data={usersList} />
+						<Column title="email" data={usersList} />
+						<Column title="website" data={usersList} />
+						<Column title="nbtodos" data={usersList} />
+						<Column title="nbalbums" data={usersList} />
+					</div>
+				</main>
+			)}
 			<Footer />
 		</>
 	);
