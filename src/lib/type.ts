@@ -41,7 +41,7 @@ export type Todo = {
 };
 
 // Album sent by the API
-export type Album = {
+export type TAlbum = {
 	userId: number;
 	id: number;
 	title: string;

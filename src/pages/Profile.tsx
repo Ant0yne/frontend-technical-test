@@ -2,23 +2,23 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import type { Album, User } from "@/lib/type";
+import type { TAlbum, User } from "@/lib/type";
 
 // COMPONENTS
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Loading from "@/components/Loading";
 import Main from "@/components/Main";
-import { Button } from "@/components/ui/button";
 import ReturnButton from "@/components/ReturnButton";
 import TitleH2 from "@/components/TitleH2";
+import Album from "@/components/Album";
 
 const Profile = () => {
 	const [isLoading, setIsLoading] = useState(true);
 
 	// fetched data for a user and all their albums
 	const [user, setUser] = useState<User | null>(null);
-	const [albums, setAlbums] = useState<Album[] | null>(null);
+	const [albums, setAlbums] = useState<TAlbum[] | null>(null);
 
 	const { userId } = useParams();
 
@@ -29,7 +29,7 @@ const Profile = () => {
 				const resUser = await axios.get<User>(
 					`${import.meta.env.VITE_API}/users/${userId}`
 				);
-				const resAlbums = await axios.get<Album[]>(
+				const resAlbums = await axios.get<TAlbum[]>(
 					`${import.meta.env.VITE_API}/users/${userId}/albums`
 				);
 
@@ -59,32 +59,23 @@ const Profile = () => {
 				<Main>
 					<ReturnButton url="/" to="users list" />
 					<TitleH2 title={user?.name.toUpperCase()} />
-					<div className="flex justify-between mx-auto max-w-lg">
-						<p>Username:</p>
-						<p>{user?.username}</p>
-					</div>
-					<div className="flex justify-between mx-auto max-w-lg">
-						<p>Email:</p>
-						<p>{user?.email}</p>
-					</div>
 					<div className="mt-5 mx-auto max-w-lg">
-						<h3 className="text-center text-lg border-b-2 border-slate-900">
-							Albums
+						<div className="flex justify-between ">
+							<p>Username:</p>
+							<p>{user?.username}</p>
+						</div>
+						<div className="flex justify-between ">
+							<p>Email:</p>
+							<p>{user?.email}</p>
+						</div>
+						<h3 className="text-center text-lg lg:text-2xl my-5">
+							{albums?.length} Albums:
 						</h3>
-						<ul>
-							{albums?.map((album) => (
-								<li key={album.id} className="border-b-2">
-									<p className="text-center mt-1">{album.title}</p>
-									<Link
-										to={`/photos/${album.id}`}
-										className="flex justify-center mt-3 mb-5">
-										<Button className="bg-slate-900 lg:text-xl lg:p-5">
-											Go to Album
-										</Button>
-									</Link>
-								</li>
-							))}
-						</ul>
+					</div>
+					<div className="flex flex-wrap justify-around">
+						{albums?.map((album) => (
+							<Album key={album.id} title={album.title} id={album.id} />
+						))}
 					</div>
 				</Main>
 			)}

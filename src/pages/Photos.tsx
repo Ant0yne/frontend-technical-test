@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import type { Album, TPhotos } from "@/lib/type";
+import type { TAlbum, TPhotos } from "@/lib/type";
 
 // COMPONENTS
 import Footer from "@/components/Footer";
@@ -16,7 +16,7 @@ const Photos = () => {
 	const [isLoading, setIsLoading] = useState(true);
 
 	// fetched data for an album and all their photos
-	const [album, setAlbum] = useState<Album | null>(null);
+	const [album, setAlbum] = useState<TAlbum | null>(null);
 	const [photos, setPhotos] = useState<TPhotos[] | null>(null);
 
 	const { albumId } = useParams();
@@ -28,7 +28,7 @@ const Photos = () => {
 				const resPhotos = await axios.get<TPhotos[]>(
 					`${import.meta.env.VITE_API}/photos?albumId=${albumId}`
 				);
-				const resAlbum = await axios.get<Album>(
+				const resAlbum = await axios.get<TAlbum>(
 					`${import.meta.env.VITE_API}/albums/${albumId}`
 				);
 
@@ -57,7 +57,6 @@ const Photos = () => {
 			) : (
 				<Main>
 					<ReturnButton url={`/profile/${album?.userId}`} to="user's profile" />
-
 					<TitleH2 title={album?.title.toUpperCase()} />
 					<p className="text-center italic mb-2">{photos?.length} photos</p>
 					<div className="flex flex-wrap justify-around">
@@ -68,7 +67,7 @@ const Photos = () => {
 								alt={photo.title}
 								width={150}
 								height={150}
-								className="m-3"
+								className="m-3 rounded-md hover:opacity-75 hover:border-2 border-slate-200"
 							/>
 						))}
 					</div>
