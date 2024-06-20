@@ -58,10 +58,20 @@ const Photos = () => {
 				<Main>
 					<ReturnButton url={`/profile/${album?.userId}`} to="user's profile" />
 
-					<h2 className="text-center text-xl">{album?.title.toUpperCase()}</h2>
-					<div className="flex flex-wrap">
+					<h2 className="text-center text-xl font-bold my-4 text-slate-900">
+						{album?.title.toUpperCase()}
+					</h2>
+					<p className="text-center italic mb-2">{photos?.length} photos</p>
+					<div className="flex flex-wrap justify-around">
 						{photos?.map((photo) => (
-							<img key={photo.id} src={photo.thumbnailUrl} alt={photo.title} />
+							<img
+								key={photo.id}
+								src={photo.thumbnailUrl}
+								alt={photo.title}
+								width={150}
+								height={150}
+								className="m-3"
+							/>
 						))}
 					</div>
 				</Main>
