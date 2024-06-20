@@ -1,8 +1,9 @@
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import type { TAlbum, User } from "@/lib/type";
+import { albumListZod, userZod } from "@/lib/validations";
 
 // COMPONENTS
 import Footer from "@/components/Footer";
@@ -26,15 +27,30 @@ const Profile = () => {
 		const fetchData = async () => {
 			try {
 				// fetch the user by the params userId and all the albums linked to them
+				// Then check the data are valid to Zod Schema
 				const resUser = await axios.get<User>(
 					`${import.meta.env.VITE_API}/users/${userId}`
 				);
+				const valResUser = userZod.safeParse(resUser.data);
+				if (!valResUser.success) {
+					console.error(valResUser.error);
+					setIsLoading(false);
+					return;
+				}
+
 				const resAlbums = await axios.get<TAlbum[]>(
 					`${import.meta.env.VITE_API}/users/${userId}/albums`
 				);
+				const valResAlbums = albumListZod.safeParse(resAlbums.data);
 
-				setUser(resUser.data);
-				setAlbums(resAlbums.data);
+				if (!valResAlbums.success) {
+					console.error(valResAlbums.error);
+					setIsLoading(false);
+					return;
+				}
+
+				setUser(valResUser.data);
+				setAlbums(valResAlbums.data);
 				setIsLoading(false);
 			} catch (error: any) {
 				if (error?.response) {

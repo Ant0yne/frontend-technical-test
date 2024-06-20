@@ -28,6 +28,8 @@ const Home = () => {
 				const valResUsers = userListZod.safeParse(resUsers.data);
 				if (!valResUsers.success) {
 					console.error(valResUsers.error);
+					setIsLoading(false);
+					return;
 				}
 
 				const resTodos = await axios.get<Todo[]>(
@@ -36,6 +38,8 @@ const Home = () => {
 				const valResTodos = todoListZod.safeParse(resTodos.data);
 				if (!valResTodos.success) {
 					console.error(valResTodos.error);
+					setIsLoading(false);
+					return;
 				}
 
 				const resAlbums = await axios.get<TAlbum[]>(
@@ -44,6 +48,8 @@ const Home = () => {
 				const valResAlbums = albumListZod.safeParse(resAlbums.data);
 				if (!valResAlbums.success) {
 					console.error(valResAlbums.error);
+					setIsLoading(false);
+					return;
 				}
 
 				// to count the todos and albums for a user
@@ -52,30 +58,26 @@ const Home = () => {
 				// to add the counts for each user received and create a new array with them
 				const userFinalTemp: UserFinal[] = [];
 
-				if (valResUsers.data && valResTodos.data && valResAlbums.data) {
-					for (let user of valResUsers.data) {
-						// Count the numbers of todos and albums for the user
-						for (let todo of valResTodos.data) {
-							user.id === todo.userId && todosCount++;
-						}
-						for (let album of valResAlbums.data) {
-							user.id === album.userId && albumsCount++;
-						}
-						// modify the user to add those counts to their object's keys
-						userFinalTemp.push({
-							...user,
-							nbtodos: todosCount,
-							nbalbums: albumsCount,
-						});
-						// reset the counts before switching to the next user
-						todosCount = 0;
-						albumsCount = 0;
+				for (let user of valResUsers.data) {
+					// Count the numbers of todos and albums for the user
+					for (let todo of valResTodos.data) {
+						user.id === todo.userId && todosCount++;
 					}
-				} else {
-					console.error("Missing data");
+					for (let album of valResAlbums.data) {
+						user.id === album.userId && albumsCount++;
+					}
+					// modify the user to add those counts to their object's keys
+					userFinalTemp.push({
+						...user,
+						nbtodos: todosCount,
+						nbalbums: albumsCount,
+					});
+					// reset the counts before switching to the next user
+					todosCount = 0;
+					albumsCount = 0;
 				}
-
 				setUsersList(userFinalTemp);
+
 				setIsLoading(false);
 			} catch (error: any) {
 				if (error?.response) {

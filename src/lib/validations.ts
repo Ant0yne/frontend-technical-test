@@ -42,6 +42,7 @@ export const albumZod = z.object({
 	userId: z.number(),
 	id: z.number(),
 	title: z.string(),
+	test: z.string(),
 });
 
 export const albumListZod = z.array(albumZod);
