@@ -6,6 +6,7 @@ import Profile from "./pages/Profile";
 import Album from "./pages/Album";
 
 import "./App.css";
+import NotFound from "./pages/NotFound";
 
 function App() {
 	return (
@@ -14,6 +15,7 @@ function App() {
 				<Route path="/" element={<Home />} />
 				<Route path="/profile" element={<Profile />} />
 				<Route path="/album" element={<Album />} />
+				<Route path="*" element={<NotFound />} />
 			</Routes>
 		</Router>
 	);

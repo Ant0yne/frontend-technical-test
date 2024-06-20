@@ -32,11 +32,11 @@ const Column = ({
 			<ul>
 				{data?.map((user) => (
 					<li key={user.id}>
-						<div className="border-2">
+						<div className="border-b-2">
 							{title === "username" || title === "website" ? (
 								<p
 									onClick={() => handleNav(user[title])}
-									className="mx-2 text-slate-900 underline hover:cursor-pointer">
+									className="mx-2 text-blue-700 underline hover:cursor-pointer">
 									{user[title]}
 								</p>
 							) : (
