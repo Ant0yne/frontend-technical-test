@@ -23,7 +23,7 @@ const Column = ({
 
 	return (
 		<div className="border-2 border-slate-900 flex-1">
-			<h2 className=" text-white text-center bg-slate-900">
+			<h2 className=" text-white text-center bg-slate-900 py-2">
 				{title.toUpperCase()}
 			</h2>
 			<ul>
@@ -33,11 +33,11 @@ const Column = ({
 							{title === "username" || title === "website" ? (
 								<p
 									onClick={() => handleNav(user)}
-									className="mx-2 text-blue-700 underline hover:cursor-pointer">
+									className="mx-2 my-1 text-blue-700 underline hover:cursor-pointer">
 									{user[title]}
 								</p>
 							) : (
-								<p className="mx-2">{user[title]}</p>
+								<p className="mx-2 my-1">{user[title]}</p>
 							)}
 						</div>
 					</li>
