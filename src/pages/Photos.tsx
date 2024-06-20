@@ -2,14 +2,14 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 
-const Album = () => {
+const Photos = () => {
 	return (
 		<>
 			<Header />
-			<main>Profile</main>
+			<main>Photos</main>
 			<Footer />
 		</>
 	);
 };
 
-export default Album;
+export default Photos;
