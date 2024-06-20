@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-import type { Album, Todo, User, UserFinal } from "../lib/type";
+import type { TAlbum, Todo, User, UserFinal } from "../lib/type";
+import { albumListZod, todoListZod, userListZod } from "@/lib/validations";
 
 // COMPONENTS
 import Loading from "../components/Loading";
@@ -20,15 +21,30 @@ const Home = () => {
 		const fetchData = async () => {
 			try {
 				// fetch all the users, todos and albums
+				// Then check the data are valid to Zod Schema
 				const resUsers = await axios.get<User[]>(
 					`${import.meta.env.VITE_API}/users`
 				);
+				const valResUsers = userListZod.safeParse(resUsers.data);
+				if (!valResUsers.success) {
+					console.error(valResUsers.error);
+				}
+
 				const resTodos = await axios.get<Todo[]>(
 					`${import.meta.env.VITE_API}/todos`
 				);
-				const resAlbums = await axios.get<Album[]>(
+				const valResTodos = todoListZod.safeParse(resTodos.data);
+				if (!valResTodos.success) {
+					console.error(valResTodos.error);
+				}
+
+				const resAlbums = await axios.get<TAlbum[]>(
 					`${import.meta.env.VITE_API}/albums`
 				);
+				const valResAlbums = albumListZod.safeParse(resAlbums.data);
+				if (!valResAlbums.success) {
+					console.error(valResAlbums.error);
+				}
 
 				// to count the todos and albums for a user
 				let todosCount: number = 0;
@@ -36,23 +52,27 @@ const Home = () => {
 				// to add the counts for each user received and create a new array with them
 				const userFinalTemp: UserFinal[] = [];
 
-				for (let user of resUsers.data) {
-					// Count the numbers of todos and albums for the user
-					for (let todo of resTodos.data) {
-						user.id === todo.userId && todosCount++;
+				if (valResUsers.data && valResTodos.data && valResAlbums.data) {
+					for (let user of valResUsers.data) {
+						// Count the numbers of todos and albums for the user
+						for (let todo of valResTodos.data) {
+							user.id === todo.userId && todosCount++;
+						}
+						for (let album of valResAlbums.data) {
+							user.id === album.userId && albumsCount++;
+						}
+						// modify the user to add those counts to their object's keys
+						userFinalTemp.push({
+							...user,
+							nbtodos: todosCount,
+							nbalbums: albumsCount,
+						});
+						// reset the counts before switching to the next user
+						todosCount = 0;
+						albumsCount = 0;
 					}
-					for (let album of resAlbums.data) {
-						user.id === album.userId && albumsCount++;
-					}
-					// modify the user to add those counts to their object's keys
-					userFinalTemp.push({
-						...user,
-						nbtodos: todosCount,
-						nbalbums: albumsCount,
-					});
-					// reset the counts before switching to the next user
-					todosCount = 0;
-					albumsCount = 0;
+				} else {
+					console.error("Missing data");
 				}
 
 				setUsersList(userFinalTemp);
