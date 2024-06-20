@@ -10,6 +10,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Loading from "@/components/Loading";
 import Main from "@/components/Main";
+import ReturnButton from "@/components/ReturnButton";
 
 const Photos = () => {
 	const [isLoading, setIsLoading] = useState(true);
@@ -55,12 +56,8 @@ const Photos = () => {
 				</Main>
 			) : (
 				<Main>
-					<Link
-						to={`/profile/${album?.userId}`}
-						className="underline underline-offset-2  flex items-center">
-						<FontAwesomeIcon icon="angles-left" />
-						<p>Return to user's profile</p>
-					</Link>
+					<ReturnButton url={`/profile/${album?.userId}`} to="user's profile" />
+
 					<h2 className="text-center text-xl">{album?.title.toUpperCase()}</h2>
 					<div className="flex flex-wrap">
 						{photos?.map((photo) => (

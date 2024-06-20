@@ -11,6 +11,7 @@ import Header from "@/components/Header";
 import Loading from "@/components/Loading";
 import Main from "@/components/Main";
 import { Button } from "@/components/ui/button";
+import ReturnButton from "@/components/ReturnButton";
 
 const Profile = () => {
 	const [isLoading, setIsLoading] = useState(true);
@@ -56,12 +57,7 @@ const Profile = () => {
 				</Main>
 			) : (
 				<Main>
-					<Link
-						to="/"
-						className="flex items-center gap-2 text-sm text-slate-500">
-						<FontAwesomeIcon icon="angles-left" />
-						<p>Return to user's list</p>
-					</Link>
+					<ReturnButton url="/" to="users list" />
 					<h2 className="text-center text-xl font-bold my-4 text-slate-900">
 						{user?.name.toUpperCase()}
 					</h2>
