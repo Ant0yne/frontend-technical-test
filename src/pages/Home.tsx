@@ -72,7 +72,7 @@ const Home = () => {
 				</Main>
 			) : (
 				<Main>
-					<div className="flex">
+					<div className="flex flex-wrap">
 						<Column title="username" data={usersList} />
 						<Column title="email" data={usersList} />
 						<Column title="website" data={usersList} />
