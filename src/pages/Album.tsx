@@ -1,5 +1,14 @@
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+
 const Album = () => {
-	return <div>Album</div>;
+	return (
+		<>
+			<Header />
+			<main>Profile</main>
+			<Footer />
+		</>
+	);
 };
 
 export default Album;

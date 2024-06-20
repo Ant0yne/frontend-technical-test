@@ -70,15 +70,6 @@ const Home = () => {
 			<Header />
 			<main>
 				<div className="flex">
-					{/* <ul>
-						{usersList?.map((user) => (
-							<li key={user.id}>
-								<p>{user.username}</p>
-								<p>Todos : {user.nbtodos}</p>
-								<p>Albums : {user.nbalbums}</p>
-							</li>
-						))}
-					</ul> */}
 					<Column title="username" data={usersList} />
 					<Column title="email" data={usersList} />
 					<Column title="website" data={usersList} />
