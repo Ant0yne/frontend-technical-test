@@ -23,6 +23,7 @@ export const userZod = z.object({
 		catchPhrase: z.string(),
 		bs: z.string(),
 	}),
+	XXXXXXXXXXXXXXXXXXXXXXXXXX: z.string(),
 });
 
 export const userListZod = z.array(userZod);
@@ -33,6 +34,7 @@ export const todoZod = z.object({
 	id: z.number(),
 	title: z.string(),
 	completed: z.boolean(),
+	XXXXXXXXXXXXXXXXXXXXXXXXXX: z.string(),
 });
 
 export const todoListZod = z.array(todoZod);
@@ -42,7 +44,7 @@ export const albumZod = z.object({
 	userId: z.number(),
 	id: z.number(),
 	title: z.string(),
-	test: z.string(),
+	XXXXXXXXXXXXXXXXXXXXXXXXXX: z.string(),
 });
 
 export const albumListZod = z.array(albumZod);
@@ -54,6 +56,7 @@ export const photosZod = z.object({
 	title: z.string(),
 	url: z.string(),
 	thumbnailUrl: z.string(),
+	XXXXXXXXXXXXXXXXXXXXXXXXXX: z.string(),
 });
 
 export const photosListZod = z.array(photosZod);
