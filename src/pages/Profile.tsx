@@ -1,7 +1,6 @@
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import type { Album, User } from "@/lib/type";
 
