@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import type { Album, TPhotos } from "@/lib/type";
 
@@ -8,6 +9,7 @@ import type { Album, TPhotos } from "@/lib/type";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Loading from "@/components/Loading";
+import Main from "@/components/Main";
 
 const Photos = () => {
 	const [isLoading, setIsLoading] = useState(true);
@@ -36,18 +38,24 @@ const Photos = () => {
 		<>
 			<Header />
 			{isLoading ? (
-				<main>
+				<Main>
 					<Loading />
-				</main>
+				</Main>
 			) : (
-				<main>
+				<Main>
+					<Link
+						to={`/profile/${album?.userId}`}
+						className="underline underline-offset-2  flex items-center">
+						<FontAwesomeIcon icon="angles-left" />
+						<p>Return to user's profile</p>
+					</Link>
 					<h2 className="text-center text-xl">{album?.title}</h2>
 					<div className="flex flex-wrap">
 						{photos?.map((photo) => (
 							<img key={photo.id} src={photo.thumbnailUrl} alt={photo.title} />
 						))}
 					</div>
-				</main>
+				</Main>
 			)}
 			<Footer />
 		</>

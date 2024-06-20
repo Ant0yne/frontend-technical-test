@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import type { Album, User } from "@/lib/type";
 
@@ -8,6 +9,7 @@ import type { Album, User } from "@/lib/type";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Loading from "@/components/Loading";
+import Main from "@/components/Main";
 
 const Profile = () => {
 	const [isLoading, setIsLoading] = useState(true);
@@ -38,11 +40,17 @@ const Profile = () => {
 		<>
 			<Header />
 			{isLoading ? (
-				<main>
+				<Main>
 					<Loading />
-				</main>
+				</Main>
 			) : (
-				<main>
+				<Main>
+					<Link
+						to="/"
+						className="underline underline-offset-2 flex items-center">
+						<FontAwesomeIcon icon="angles-left" />
+						<p>Return to user's list</p>
+					</Link>
 					<h2 className="text-center text-xl">{user?.name}</h2>
 					<div>
 						<p>Username: {user?.username}</p>
@@ -61,7 +69,7 @@ const Profile = () => {
 							))}
 						</ul>
 					</div>
-				</main>
+				</Main>
 			)}
 			<Footer />
 		</>

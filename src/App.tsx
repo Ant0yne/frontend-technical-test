@@ -1,4 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+	faUsersRectangle,
+	faAnglesLeft,
+} from "@fortawesome/free-solid-svg-icons";
+
+library.add(faUsersRectangle, faAnglesLeft);
 
 // ROUTES
 import Home from "./pages/Home";

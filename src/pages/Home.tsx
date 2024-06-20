@@ -8,6 +8,7 @@ import Loading from "../components/Loading";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Column from "@/components/Column";
+import Main from "@/components/Main";
 
 const Home = () => {
 	const [isLoading, setIsLoading] = useState(true);
@@ -66,11 +67,11 @@ const Home = () => {
 		<>
 			<Header />
 			{isLoading ? (
-				<main>
+				<Main>
 					<Loading />
-				</main>
+				</Main>
 			) : (
-				<main>
+				<Main>
 					<div className="flex">
 						<Column title="username" data={usersList} />
 						<Column title="email" data={usersList} />
@@ -78,7 +79,7 @@ const Home = () => {
 						<Column title="nbtodos" data={usersList} />
 						<Column title="nbalbums" data={usersList} />
 					</div>
-				</main>
+				</Main>
 			)}
 			<Footer />
 		</>

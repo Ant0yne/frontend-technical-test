@@ -27,7 +27,7 @@ const Column = ({
 	};
 
 	return (
-		<div className="border-2 border-black">
+		<div className="border-2 border-black flex-1">
 			<h2 className=" text-white text-center bg-slate-900">{title}</h2>
 			<ul>
 				{data?.map((user) => (
