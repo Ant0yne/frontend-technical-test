@@ -13,6 +13,8 @@ import Main from "@/components/Main";
 
 const Profile = () => {
 	const [isLoading, setIsLoading] = useState(true);
+
+	// fetched data for a user and all their albums
 	const [user, setUser] = useState<User | null>(null);
 	const [albums, setAlbums] = useState<Album[] | null>(null);
 
@@ -20,17 +22,25 @@ const Profile = () => {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const resUser = await axios.get<User>(
-				`${import.meta.env.VITE_API}/users/${userId}`
-			);
+			try {
+				// fetch the user by the params userId and all the albums linked to them
+				const resUser = await axios.get<User>(
+					`${import.meta.env.VITE_API}/users/${userId}`
+				);
+				const resAlbums = await axios.get<Album[]>(
+					`${import.meta.env.VITE_API}/users/${userId}/albums`
+				);
 
-			const resAlbums = await axios.get<Album[]>(
-				`${import.meta.env.VITE_API}/users/${userId}/albums`
-			);
-
-			setUser(resUser.data);
-			setAlbums(resAlbums.data);
-			setIsLoading(false);
+				setUser(resUser.data);
+				setAlbums(resAlbums.data);
+				setIsLoading(false);
+			} catch (error: any) {
+				if (error?.response) {
+					console.error(error.response.data);
+				} else {
+					console.error(error.message);
+				}
+			}
 		};
 
 		fetchData();

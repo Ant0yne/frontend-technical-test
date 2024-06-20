@@ -13,22 +13,34 @@ import Main from "@/components/Main";
 
 const Photos = () => {
 	const [isLoading, setIsLoading] = useState(true);
-	const [photos, setPhotos] = useState<TPhotos[] | null>(null);
+
+	// fetched data for an album and all their photos
 	const [album, setAlbum] = useState<Album | null>(null);
+	const [photos, setPhotos] = useState<TPhotos[] | null>(null);
 
 	const { albumId } = useParams();
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const resPhotos = await axios.get<TPhotos[]>(
-				`${import.meta.env.VITE_API}/photos?albumId=${albumId}`
-			);
-			const resAlbum = await axios.get<Album>(
-				`${import.meta.env.VITE_API}/albums/${albumId}`
-			);
-			setPhotos(resPhotos.data);
-			setAlbum(resAlbum.data);
-			setIsLoading(false);
+			try {
+				// fetch the album by the params albumId and all the photos for this album
+				const resPhotos = await axios.get<TPhotos[]>(
+					`${import.meta.env.VITE_API}/photos?albumId=${albumId}`
+				);
+				const resAlbum = await axios.get<Album>(
+					`${import.meta.env.VITE_API}/albums/${albumId}`
+				);
+
+				setPhotos(resPhotos.data);
+				setAlbum(resAlbum.data);
+				setIsLoading(false);
+			} catch (error: any) {
+				if (error?.response) {
+					console.error(error.response.data);
+				} else {
+					console.error(error.message);
+				}
+			}
 		};
 
 		fetchData();
@@ -49,7 +61,7 @@ const Photos = () => {
 						<FontAwesomeIcon icon="angles-left" />
 						<p>Return to user's profile</p>
 					</Link>
-					<h2 className="text-center text-xl">{album?.title}</h2>
+					<h2 className="text-center text-xl">{album?.title.toUpperCase()}</h2>
 					<div className="flex flex-wrap">
 						{photos?.map((photo) => (
 							<img key={photo.id} src={photo.thumbnailUrl} alt={photo.title} />

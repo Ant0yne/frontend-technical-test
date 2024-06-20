@@ -1,5 +1,7 @@
+// Name for the table's columns
 export type Column = "username" | "email" | "website" | "nbtodos" | "nbalbums";
 
+// User sent by the API
 export type User = {
 	id: number;
 	name: string;
@@ -24,11 +26,13 @@ export type User = {
 	};
 };
 
+// User with their number of todos and albums
 export type UserFinal = User & {
 	nbtodos: number;
 	nbalbums: number;
 };
 
+// Todo sent by the API
 export type Todo = {
 	userId: number;
 	id: number;
@@ -36,12 +40,14 @@ export type Todo = {
 	completed: boolean;
 };
 
+// Album sent by the API
 export type Album = {
 	userId: number;
 	id: number;
 	title: string;
 };
 
+// Photo sent by the API
 export type TPhotos = {
 	albumId: number;
 	id: number;

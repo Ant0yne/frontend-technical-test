@@ -19,32 +19,38 @@ const Home = () => {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
+				// fetch all the users, todos and albums
 				const resUsers = await axios.get<User[]>(
 					`${import.meta.env.VITE_API}/users`
 				);
-
 				const resTodos = await axios.get<Todo[]>(
 					`${import.meta.env.VITE_API}/todos`
 				);
 				const resAlbums = await axios.get<Album[]>(
 					`${import.meta.env.VITE_API}/albums`
 				);
+
+				// to count the todos and albums for a user
 				let todosCount: number = 0;
 				let albumsCount: number = 0;
+				// to add the counts for each user received and create a new array with them
 				const userFinalTemp: UserFinal[] = [];
 
 				for (let user of resUsers.data) {
+					// Count the numbers of todos and albums for the user
 					for (let todo of resTodos.data) {
 						user.id === todo.userId && todosCount++;
 					}
 					for (let album of resAlbums.data) {
 						user.id === album.userId && albumsCount++;
 					}
+					// modify the user to add those counts to their object's keys
 					userFinalTemp.push({
 						...user,
 						nbtodos: todosCount,
 						nbalbums: albumsCount,
 					});
+					// reset the counts before switching to the next user
 					todosCount = 0;
 					albumsCount = 0;
 				}

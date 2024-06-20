@@ -11,16 +11,11 @@ const Column = ({
 }) => {
 	const navigate = useNavigate();
 
-	/**
-	 *
-	 * @param link
-	 *
-	 * When clicking on an username in the table -> redirect to the username profile
-	 * When clicking on a website link in the table -> open a new tab to the user's website
-	 */
 	const handleNav = (user: UserFinal) => {
+		// When clicking on an username in the table -> redirect to the username profile
 		if (title === "username") {
 			navigate(`/profile/${user.id}`);
+			//When clicking on a website link in the table -> open a new tab to the user's website
 		} else if (title === "website") {
 			window.open(`https://${user.website}`, "_blank", "noopener,noreferrer");
 		}
@@ -28,7 +23,9 @@ const Column = ({
 
 	return (
 		<div className="border-2 border-black flex-1">
-			<h2 className=" text-white text-center bg-slate-900">{title}</h2>
+			<h2 className=" text-white text-center bg-slate-900">
+				{title.toUpperCase()}
+			</h2>
 			<ul>
 				{data?.map((user) => (
 					<li key={user.id}>
