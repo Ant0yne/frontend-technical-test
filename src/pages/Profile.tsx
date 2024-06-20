@@ -68,8 +68,8 @@ const Profile = () => {
 							<p>Email:</p>
 							<p>{user?.email}</p>
 						</div>
-						<h3 className="text-center text-lg lg:text-2xl my-5">
-							{albums?.length} Albums:
+						<h3 className="text-center text-lg lg:text-2xl my-5 underline">
+							{albums?.length} Albums
 						</h3>
 					</div>
 					<div className="flex flex-wrap justify-around">
