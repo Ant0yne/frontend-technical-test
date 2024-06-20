@@ -10,6 +10,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Loading from "@/components/Loading";
 import Main from "@/components/Main";
+import { Button } from "@/components/ui/button";
 
 const Profile = () => {
 	const [isLoading, setIsLoading] = useState(true);
@@ -57,23 +58,33 @@ const Profile = () => {
 				<Main>
 					<Link
 						to="/"
-						className="underline underline-offset-2 flex items-center">
+						className="flex items-center gap-2 text-sm text-slate-500">
 						<FontAwesomeIcon icon="angles-left" />
 						<p>Return to user's list</p>
 					</Link>
-					<h2 className="text-center text-xl">{user?.name}</h2>
-					<div>
-						<p>Username: {user?.username}</p>
-						<p>Email: {user?.email}</p>
+					<h2 className="text-center text-xl font-bold my-4 text-slate-900">
+						{user?.name.toUpperCase()}
+					</h2>
+					<div className="flex justify-between mx-auto max-w-lg">
+						<p>Username:</p>
+						<p>{user?.username}</p>
 					</div>
-					<div>
+					<div className="flex justify-between mx-auto max-w-lg">
+						<p>Email:</p>
+						<p>{user?.email}</p>
+					</div>
+					<div className="mt-5 mx-auto max-w-lg">
+						<h3 className="text-center text-lg border-b-2 border-slate-900">
+							Albums
+						</h3>
 						<ul>
 							{albums?.map((album) => (
-								<li key={album.id}>
+								<li key={album.id} className="border-b-2">
+									<p className="text-center mt-1">{album.title}</p>
 									<Link
 										to={`/photos/${album.id}`}
-										className=" text-blue-700 underline hover:cursor-pointer">
-										{album.title}
+										className="flex justify-center mt-3 mb-5">
+										<Button className="bg-slate-900">Go to Album</Button>
 									</Link>
 								</li>
 							))}

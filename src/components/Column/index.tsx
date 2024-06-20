@@ -22,7 +22,7 @@ const Column = ({
 	};
 
 	return (
-		<div className="border-2 border-black flex-1">
+		<div className="border-2 border-slate-900 flex-1">
 			<h2 className=" text-white text-center bg-slate-900">
 				{title.toUpperCase()}
 			</h2>
