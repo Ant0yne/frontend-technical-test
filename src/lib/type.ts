@@ -1,3 +1,5 @@
+export type Column = "username" | "email" | "website" | "nbtodos" | "nbalbums";
+
 export type User = {
 	id: number;
 	name: string;

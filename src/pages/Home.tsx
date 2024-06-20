@@ -6,6 +6,7 @@ import type { Album, Todo, User, UserFinal } from "../lib/type";
 import Loading from "../components/Loading";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Column from "@/components/Column";
 
 const Home = () => {
 	const [isLoading, setIsLoading] = useState(true);
@@ -68,15 +69,22 @@ const Home = () => {
 		<>
 			<Header />
 			<main>
-				<ul>
-					{usersList?.map((user) => (
-						<li key={user.id}>
-							<p>{user.username}</p>
-							<p>Todos : {user.nbtodos}</p>
-							<p>Albums : {user.nbalbums}</p>
-						</li>
-					))}
-				</ul>
+				<div className="flex">
+					{/* <ul>
+						{usersList?.map((user) => (
+							<li key={user.id}>
+								<p>{user.username}</p>
+								<p>Todos : {user.nbtodos}</p>
+								<p>Albums : {user.nbalbums}</p>
+							</li>
+						))}
+					</ul> */}
+					<Column title="username" data={usersList} />
+					<Column title="email" data={usersList} />
+					<Column title="website" data={usersList} />
+					<Column title="nbtodos" data={usersList} />
+					<Column title="nbalbums" data={usersList} />
+				</div>
 			</main>
 			<Footer />
 		</>
