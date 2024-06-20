@@ -11,6 +11,7 @@ import Loading from "@/components/Loading";
 import Main from "@/components/Main";
 import { Button } from "@/components/ui/button";
 import ReturnButton from "@/components/ReturnButton";
+import TitleH2 from "@/components/TitleH2";
 
 const Profile = () => {
 	const [isLoading, setIsLoading] = useState(true);
@@ -57,9 +58,7 @@ const Profile = () => {
 			) : (
 				<Main>
 					<ReturnButton url="/" to="users list" />
-					<h2 className="text-center text-xl font-bold my-4 text-slate-900">
-						{user?.name.toUpperCase()}
-					</h2>
+					<TitleH2 title={user?.name.toUpperCase()} />
 					<div className="flex justify-between mx-auto max-w-lg">
 						<p>Username:</p>
 						<p>{user?.username}</p>
@@ -79,7 +78,9 @@ const Profile = () => {
 									<Link
 										to={`/photos/${album.id}`}
 										className="flex justify-center mt-3 mb-5">
-										<Button className="bg-slate-900">Go to Album</Button>
+										<Button className="bg-slate-900 lg:text-xl lg:p-5">
+											Go to Album
+										</Button>
 									</Link>
 								</li>
 							))}

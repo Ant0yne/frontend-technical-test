@@ -10,6 +10,7 @@ import Header from "@/components/Header";
 import Loading from "@/components/Loading";
 import Main from "@/components/Main";
 import ReturnButton from "@/components/ReturnButton";
+import TitleH2 from "@/components/TitleH2";
 
 const Photos = () => {
 	const [isLoading, setIsLoading] = useState(true);
@@ -57,9 +58,7 @@ const Photos = () => {
 				<Main>
 					<ReturnButton url={`/profile/${album?.userId}`} to="user's profile" />
 
-					<h2 className="text-center text-xl font-bold my-4 text-slate-900">
-						{album?.title.toUpperCase()}
-					</h2>
+					<TitleH2 title={album?.title.toUpperCase()} />
 					<p className="text-center italic mb-2">{photos?.length} photos</p>
 					<div className="flex flex-wrap justify-around">
 						{photos?.map((photo) => (
