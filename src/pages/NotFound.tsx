@@ -7,7 +7,7 @@ const NotFound = () => {
 		<>
 			<Header />
 			<main>
-				<h1>Sorry, this page doesn't exist :(</h1>
+				<h2>Sorry, this page doesn't exist :(</h2>
 			</main>
 			<Footer />
 		</>

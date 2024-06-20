@@ -2,7 +2,7 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import { Album, User } from "@/lib/type";
+import type { Album, User } from "@/lib/type";
 
 // COMPONENTS
 import Footer from "@/components/Footer";
