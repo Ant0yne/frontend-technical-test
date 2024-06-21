@@ -31,6 +31,20 @@ const UserDetails = ({
 							<p>Email:</p>
 							<p>{user?.email}</p>
 						</div>
+						<div className="flex justify-between ">
+							<p>Website:</p>
+							<p
+								onClick={() =>
+									window.open(
+										`https://${user?.website}`,
+										"_blank",
+										"noopener,noreferrer"
+									)
+								}
+								className="mx-2 my-1 text-blue-700 underline hover:cursor-pointer">
+								{user?.website}
+							</p>
+						</div>
 						<h3 className="text-center text-lg lg:text-2xl my-5 underline">
 							{albums?.length} Albums
 						</h3>
