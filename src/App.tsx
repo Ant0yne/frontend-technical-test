@@ -3,9 +3,10 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import {
 	faUsersRectangle,
 	faAnglesLeft,
+	faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faUsersRectangle, faAnglesLeft);
+library.add(faUsersRectangle, faAnglesLeft, faSpinner);
 
 // ROUTES
 import Home from "./pages/Home";
