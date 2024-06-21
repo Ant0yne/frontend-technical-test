@@ -5,9 +5,11 @@ import type { Column, UserFinal } from "@/lib/type";
 const Column = ({
 	title,
 	data,
+	errorMessage,
 }: {
 	title: Column;
 	data: UserFinal[] | null;
+	errorMessage: string;
 }) => {
 	const navigate = useNavigate();
 
@@ -27,21 +29,25 @@ const Column = ({
 				{title.toUpperCase()}
 			</h2>
 			<ul>
-				{data?.map((user) => (
-					<li key={user.id}>
-						<div className="border-b-2">
-							{title === "username" || title === "website" ? (
-								<p
-									onClick={() => handleNav(user)}
-									className="mx-2 my-1 text-blue-700 underline hover:cursor-pointer">
-									{user[title]}
-								</p>
-							) : (
-								<p className="mx-2 my-1">{user[title]}</p>
-							)}
-						</div>
-					</li>
-				))}
+				{errorMessage ? (
+					<li className="mx-2 my-1 text-red-600 font-semibold">Wrong data</li>
+				) : (
+					data?.map((user) => (
+						<li key={user.id}>
+							<div className="border-b-2">
+								{title === "username" || title === "website" ? (
+									<p
+										onClick={() => handleNav(user)}
+										className="mx-2 my-1 text-blue-700 underline hover:cursor-pointer">
+										{user[title]}
+									</p>
+								) : (
+									<p className="mx-2 my-1">{user[title]}</p>
+								)}
+							</div>
+						</li>
+					))
+				)}
 			</ul>
 		</div>
 	);

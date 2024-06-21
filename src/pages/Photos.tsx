@@ -11,10 +11,11 @@ import Header from "@/components/Header";
 import Loading from "@/components/Loading";
 import Main from "@/components/Main";
 import ReturnButton from "@/components/ReturnButton";
-import TitleH2 from "@/components/TitleH2";
+import PhotosMosaic from "@/components/PhotosMosaic";
 
 const Photos = () => {
 	const [isLoading, setIsLoading] = useState(true);
+	const [errorMessage, setErrorMessage] = useState("");
 
 	// fetched data for an album and all their photos
 	const [album, setAlbum] = useState<TAlbum | null>(null);
@@ -33,6 +34,7 @@ const Photos = () => {
 				const valResPhotos = photosListZod.safeParse(resPhotos.data);
 				if (!valResPhotos.success) {
 					console.error(valResPhotos.error);
+					setErrorMessage("Wrong data");
 					setIsLoading(false);
 					return;
 				}
@@ -43,6 +45,7 @@ const Photos = () => {
 				const valResAlbum = albumZod.safeParse(resAlbum.data);
 				if (!valResAlbum.success) {
 					console.error(valResAlbum.error);
+					setErrorMessage("Wrong data");
 					setIsLoading(false);
 					return;
 				}
@@ -65,29 +68,23 @@ const Photos = () => {
 	return (
 		<>
 			<Header />
-			{isLoading ? (
-				<Main>
+			<Main>
+				{isLoading ? (
 					<Loading />
-				</Main>
-			) : (
-				<Main>
-					<ReturnButton url={`/profile/${album?.userId}`} to="user's profile" />
-					<TitleH2 title={album?.title.toUpperCase()} />
-					<p className="text-center italic mb-2">{photos?.length} photos</p>
-					<div className="flex flex-wrap justify-around">
-						{photos?.map((photo) => (
-							<img
-								key={photo.id}
-								src={photo.thumbnailUrl}
-								alt={photo.title}
-								width={150}
-								height={150}
-								className="m-3 rounded-md hover:opacity-75 hover:border-2 border-slate-200"
-							/>
-						))}
-					</div>
-				</Main>
-			)}
+				) : (
+					<>
+						<ReturnButton
+							url={album?.userId ? `/profile/${album.userId}` : "/"}
+							to={album?.userId ? "user's profile" : "users list"}
+						/>
+						<PhotosMosaic
+							album={album}
+							photos={photos}
+							errorMessage={errorMessage}
+						/>
+					</>
+				)}
+			</Main>
 			<Footer />
 		</>
 	);

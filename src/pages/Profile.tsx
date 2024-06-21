@@ -11,11 +11,11 @@ import Header from "@/components/Header";
 import Loading from "@/components/Loading";
 import Main from "@/components/Main";
 import ReturnButton from "@/components/ReturnButton";
-import TitleH2 from "@/components/TitleH2";
-import Album from "@/components/Album";
+import UserDetails from "@/components/UserDetails";
 
 const Profile = () => {
 	const [isLoading, setIsLoading] = useState(true);
+	const [errorMessage, setErrorMessage] = useState("");
 
 	// fetched data for a user and all their albums
 	const [user, setUser] = useState<User | null>(null);
@@ -34,6 +34,7 @@ const Profile = () => {
 				const valResUser = userZod.safeParse(resUser.data);
 				if (!valResUser.success) {
 					console.error(valResUser.error);
+					setErrorMessage("Wrong data");
 					setIsLoading(false);
 					return;
 				}
@@ -45,6 +46,7 @@ const Profile = () => {
 
 				if (!valResAlbums.success) {
 					console.error(valResAlbums.error);
+					setErrorMessage("Wrong data");
 					setIsLoading(false);
 					return;
 				}
@@ -67,34 +69,20 @@ const Profile = () => {
 	return (
 		<>
 			<Header />
-			{isLoading ? (
-				<Main>
+			<Main>
+				{isLoading ? (
 					<Loading />
-				</Main>
-			) : (
-				<Main>
-					<ReturnButton url="/" to="users list" />
-					<TitleH2 title={user?.name.toUpperCase()} />
-					<div className="mt-5 mx-auto max-w-lg">
-						<div className="flex justify-between ">
-							<p>Username:</p>
-							<p>{user?.username}</p>
-						</div>
-						<div className="flex justify-between ">
-							<p>Email:</p>
-							<p>{user?.email}</p>
-						</div>
-						<h3 className="text-center text-lg lg:text-2xl my-5 underline">
-							{albums?.length} Albums
-						</h3>
-					</div>
-					<div className="flex flex-wrap justify-around">
-						{albums?.map((album) => (
-							<Album key={album.id} title={album.title} id={album.id} />
-						))}
-					</div>
-				</Main>
-			)}
+				) : (
+					<>
+						<ReturnButton url="/" to="users list" />
+						<UserDetails
+							user={user}
+							albums={albums}
+							errorMessage={errorMessage}
+						/>
+					</>
+				)}
+			</Main>
 			<Footer />
 		</>
 	);

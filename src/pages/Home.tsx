@@ -13,6 +13,7 @@ import Main from "@/components/Main";
 
 const Home = () => {
 	const [isLoading, setIsLoading] = useState(true);
+	const [errorMessage, setErrorMessage] = useState("");
 
 	// list of users' fetched + number of todos and albums for each user
 	const [usersList, setUsersList] = useState<UserFinal[] | null>(null);
@@ -28,6 +29,7 @@ const Home = () => {
 				const valResUsers = userListZod.safeParse(resUsers.data);
 				if (!valResUsers.success) {
 					console.error(valResUsers.error);
+					setErrorMessage("Wrong data");
 					setIsLoading(false);
 					return;
 				}
@@ -38,6 +40,7 @@ const Home = () => {
 				const valResTodos = todoListZod.safeParse(resTodos.data);
 				if (!valResTodos.success) {
 					console.error(valResTodos.error);
+					setErrorMessage("Wrong data");
 					setIsLoading(false);
 					return;
 				}
@@ -48,6 +51,7 @@ const Home = () => {
 				const valResAlbums = albumListZod.safeParse(resAlbums.data);
 				if (!valResAlbums.success) {
 					console.error(valResAlbums.error);
+					setErrorMessage("Wrong data");
 					setIsLoading(false);
 					return;
 				}
@@ -94,21 +98,39 @@ const Home = () => {
 	return (
 		<>
 			<Header />
-			{isLoading ? (
-				<Main>
+			<Main>
+				{isLoading ? (
 					<Loading />
-				</Main>
-			) : (
-				<Main>
+				) : (
 					<div className="flex flex-wrap">
-						<Column title="username" data={usersList} />
-						<Column title="email" data={usersList} />
-						<Column title="website" data={usersList} />
-						<Column title="nbtodos" data={usersList} />
-						<Column title="nbalbums" data={usersList} />
+						<Column
+							title="username"
+							data={usersList}
+							errorMessage={errorMessage}
+						/>
+						<Column
+							title="email"
+							data={usersList}
+							errorMessage={errorMessage}
+						/>
+						<Column
+							title="website"
+							data={usersList}
+							errorMessage={errorMessage}
+						/>
+						<Column
+							title="nbtodos"
+							data={usersList}
+							errorMessage={errorMessage}
+						/>
+						<Column
+							title="nbalbums"
+							data={usersList}
+							errorMessage={errorMessage}
+						/>
 					</div>
-				</Main>
-			)}
+				)}
+			</Main>
 			<Footer />
 		</>
 	);
